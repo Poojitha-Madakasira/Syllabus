@@ -1,6 +1,6 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import {Button} from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import SyForm from "./Form";
 import SyCard from "./Card";
 
@@ -33,23 +33,17 @@ function Syllabus()
         })
     }
 
-    const cancelForm = (cardIndex) => {
+    const cancelForm = () => {
         const cloneCardDetails = [...cardDetails];
         cloneCardDetails.map((card, index) => {
-            if (card.editMode === true)
+            if (card.cancelStatus === false)
             {
-                card.cancelStatus = true;
-                setCardDetails(cloneCardDetails);   
+                cloneCardDetails.splice(index, 1);
+                setCardDetails(cloneCardDetails)
             }
-            else 
-            {
-                setCardDetails((prevDetails) => {
-                    const updatedDetails = [...prevDetails];
-                    updatedDetails.splice(cardIndex, 1);
-                    return updatedDetails;
-                });
-            }
-        }) 
+        });
+        const clonedCards = cloneCardDetails.map((card) => ({...card, editMode: false}));
+        setCardDetails(clonedCards);
       };
 
     const editCard = (cardIndex) =>
@@ -61,7 +55,7 @@ function Syllabus()
                 card.cancelStatus = false
                 setCardDetails(clonedCards)
             } 
-        }) 
+        });
     }
 
     const deleteCard = (index) =>
@@ -75,7 +69,7 @@ function Syllabus()
         <div>
             <Button onClick={ShowForm} variant="primary" style={{position:"absolute", top: "0", right: "0",}}>+</Button>
             {cardDetails.map((card, index) => {
-                return (card.editMode && (card.cancelStatus === false)? 
+                return (card.editMode? 
                     (<SyForm key={index} index={index} card={card} saveForm={saveForm} cancelForm={() => cancelForm(index)}/>):
                     (<SyCard key={index} index={index} card={card} editCard={() => editCard(index)} deleteCard={() => deleteCard(index)}/>)
                 )

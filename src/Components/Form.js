@@ -1,6 +1,7 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import {Button, Form, Row, Col} from "react-bootstrap";
+import { Button, Form, Row, Col } from "react-bootstrap";
+import Multiselect from 'multiselect-react-dropdown';
 
 const SyForm = (formProps) =>
 {
@@ -20,16 +21,6 @@ const SyForm = (formProps) =>
         saveForm(index, formDetails);
     };
 
-    const handleCancelForm = () => {
-        const formCancelDetails = { 
-            title: card.title || "",
-            description: card.description || "",
-            objectives: card.objectives || "",
-            editMode: true,
-            cancelStatus : true,
-        };
-        cancelForm(index, formCancelDetails);
-    };
 
     return(
         <div>
@@ -66,7 +57,7 @@ const SyForm = (formProps) =>
                 </Form.Group>
                 <center>
                     <Button onClick={handleSaveForm} variant="primary" >Save</Button>
-                    <Button onClick={handleCancelForm} variant="primary">cancel</Button>
+                    <Button onClick={cancelForm} variant="primary">cancel</Button>
                 </center>
             </Form>
         </div>
